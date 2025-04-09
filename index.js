@@ -1,6 +1,6 @@
 /**
  * 就職してから28歳までの男子専門！お悩み名言励ましBOT
- * LINE → Render → Dify → LINE
+ * LINE → Render → Dify（query対応）→ LINE
  */
 
 const express = require('express');
@@ -26,14 +26,12 @@ app.post('/webhook', async (req, res) => {
       let replyText = 'ただいま混み合っています。しばらくしてからもう一度お試しください。';
 
       try {
-        // === Difyへメッセージ送信 ===================
+        // === Difyへメッセージ送信（queryベース） ===================
         const difyRes = await axios.post(
           DIFY_API_URL,
           {
-            inputs: {
-              input: userMessage
-            },
-            user: event.source.userId,         // ← ここがポイント！
+            query: userMessage,                  // ← ← ← これが重要！
+            user: event.source.userId,
             response_mode: 'blocking'
           },
           {
