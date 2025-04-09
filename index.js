@@ -33,6 +33,7 @@ app.post('/webhook', async (req, res) => {
           DIFY_API_URL,
           {
             inputs: { input: userMessage },
+            +   user: event.source.userId,             // ← ★これを追加！
             response_mode: 'blocking'      // ← JSON 一括応答
           },
           {
